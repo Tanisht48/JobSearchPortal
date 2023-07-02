@@ -26,6 +26,6 @@ public interface IJobRepo extends CrudRepository<Job,Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "update from jobs where Job_Type= :type Set salary= :salary + (salary * 10/100)", nativeQuery = true)
-    void updateAllSalaryOfSimilarType(JobType type);
+    @Query(value = "update jobs Set salary= salary + (salary * 10/100) where Job_Type= :type", nativeQuery = true)
+    void updateAllSalaryOfSimilarType(String type);
 }
