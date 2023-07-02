@@ -1,0 +1,31 @@
+package com.Geekster.Job.Search.Portal.Repository;
+
+import com.Geekster.Job.Search.Portal.Model.Job;
+import com.Geekster.Job.Search.Portal.Model.JobType;
+import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface IJobRepo extends CrudRepository<Job,Long> {
+
+    List<Job> findByJobType(JobType type);
+
+    List<Job> findBySalaryGreaterThanEqual(Double salary);
+
+    List<Job> findByCompanyName(String cName);
+
+    @Modifying
+    @Transactional
+    @Query(value ="Delete From Jobs where Company_Name= :cName", nativeQuery = true)
+    void deleteJobsFromTheSameCompany(String cName);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update from jobs where Job_Type= :type Set salary= :salary + (salary * 10/100)", nativeQuery = true)
+    void updateAllSalaryOfSimilarType(JobType type);
+}
