@@ -100,7 +100,7 @@ public class JobService {
 
     public String updateSalaryOfSimilarJobType(JobType type) {
 
-        iJobRepo.updateAllSalaryOfSimilarType(type);
+        iJobRepo.updateAllSalaryOfSimilarType(type.name());
 
         return "Salaries Updated";
     }
